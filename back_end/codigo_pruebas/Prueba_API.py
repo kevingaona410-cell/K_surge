@@ -1,4 +1,4 @@
-#AIzaSyDiatTzAw9t3xGZzXsVPT-1FETZiKKNirk Llave del API google Places
+
 import requests
 import sqlite3
 
@@ -6,7 +6,7 @@ import sqlite3
 # CONFIGURACIÓN
 # =========================
 
-API_KEY = "AIzaSyDiatTzAw9t3xGZzXsVPT-1FETZiKKNirk"
+API_KEY = "API KEY"
 
 LAT = -25.2637
 LNG = -57.5759
@@ -108,4 +108,5 @@ def main():
                 guardar_lugar(lugar, categoria)
 
 if __name__ == "__main__":
+
     main()
