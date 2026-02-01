@@ -7,7 +7,7 @@ from datetime import datetime
 # CONFIGURACIÓN
 # =========================
 #Llave para el API
-API_KEY = "AIzaSyDiatTzAw9t3xGZzXsVPT-1FETZiKKNirk"
+API_KEY = "API KEY"
 #Punto desde el cual solicita los datos de busqueda cercana 
 LAT = -25.2637
 LNG = -57.5759
