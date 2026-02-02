@@ -2,24 +2,18 @@
 // SECCIÓN 1: LOCALES DESTACADOS
 // ===============================
 
-// Esta función se encarga de pedir los locales y mostrarlos en pantalla
 async function obtenerLocales() {
   try {
-    // Pedimos los datos (por ahora desde un archivo local, luego será el backend)
     const respuesta = await fetch('locales.json');
-
-    // Convertimos la respuesta en algo que JavaScript pueda usar
-    const datos = await respuesta.json();
-
-    // Buscamos el contenedor donde van las tarjetas
+    datosLocales = await respuesta.json(); 
+    
     const contenedor = document.getElementById('contenedor-locales');
+    if (!contenedor) return;
+    
+    contenedor.innerHTML = ''; // Limpiamos el mensaje de cargando
 
-    // Borramos el mensaje de "Cargando..."
-    contenedor.innerHTML = '';
-
-    // Recorremos cada local recibido
-    datos.forEach(local => {
-      // Creamos la tarjeta usando datos dinámicos
+    datosLocales.forEach(local => {
+      // AQUÍ DEFINIMOS LA VARIABLE (Asegúrate de que empiece con 'const')
       const tarjetaHTML = `
         <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
           <div class="relative h-56 overflow-hidden">
@@ -33,27 +27,35 @@ async function obtenerLocales() {
             <p class="text-gray-500 text-sm mb-4">${local.descripcion_corta}</p>
             <div class="flex items-center justify-between">
               <span class="text-monte font-bold">${local.precio_simbolo}</span>
-
-              <!-- Botón preparado para futuras acciones -->
-              <button onclick="verDetalles(${local.id})" class="text-tierra hover:scale-110 transition-transform">
-                +
+              <button class="text-tierra hover:scale-110 transition-transform"> 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
               </button>
             </div>
           </div>
         </div>
       `;
 
-      // Agregamos la tarjeta al contenedor
+      // Ahora que está definida, la agregamos al HTML
       contenedor.innerHTML += tarjetaHTML;
     });
 
+    // Dibujamos los pines después de las tarjetas
+    if (typeof dibujarPines === "function") {
+        dibujarPines(mapPreview);
+    }
+
   } catch (error) {
-    // Si algo falla, mostramos un mensaje claro
-    console.error("Error al cargar locales:", error);
-    document.getElementById('contenedor-locales').innerHTML =
-      "<p class='col-span-full text-center text-red-500'>No pudimos cargar los locales.</p>";
+    console.error("Error cargando locales:", error);
+    const contenedor = document.getElementById('contenedor-locales');
+    if (contenedor) {
+      contenedor.innerHTML = `<p class="col-span-full text-center py-10 text-red-500 font-bold">Error: Verifica que tu locales.json no tenga errores de sintaxis.</p>`;
+    }
   }
 }
+
+
 
 
 // ===============================
@@ -107,47 +109,117 @@ async function cargarEventosProximos() {
   }
 }
 
+//======================
+// SECCION 3: KENMAP
+//=======================
 
-// ===============================
-// SECCIÓN 3: MAPA (PREPARACIÓN)
-// ===============================
+// Variables globales
+let mapPreview;
+let mapFull;
+let datosLocales = []; 
 
-// ===============================
-// SECCIÓN MAPA – SIMULACIÓN BACKEND
-// ===============================
+// 1. Inicializar el mapa pequeño (Carga siempre)
+function initPreviewMap() {
+    if (mapPreview) return;
+    mapPreview = L.map('map-preview').setView([-25.2967, -57.6270], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(mapPreview);
+}
 
-async function cargarDatosMapa() {
+// 2. Inicializar el mapa grande (Carga solo al abrir modal)
+function initFullMap() {
+    if (!mapFull) {
+        mapFull = L.map('map-full').setView([-25.2967, -57.6270], 14);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(mapFull);
+    }
+    
+    setTimeout(() => {
+        mapFull.invalidateSize();
+        dibujarPines(mapFull);
+    }, 200);
+}
+
+// 3. Función única para dibujar los pines
+function dibujarPines(mapaDestino) {
+    if (!mapaDestino) return;
+    datosLocales.forEach(local => {
+        if (local.lat && local.lng) {
+            L.marker([local.lat, local.lng])
+                .addTo(mapaDestino)
+                .bindPopup(`<b class="text-tierra">${local.nombre}</b><br>${local.categoria}`);
+        }
+    });
+}
+
+// 4. Función de locales UNIFICADA (Aquí estaba el error)
+async function obtenerLocales() {
   try {
-    // 1. Pedimos los datos del "backend" (en realidad mapa.json)
-    const respuesta = await fetch('mapa.json');
+    const respuesta = await fetch('locales.json');
+    datosLocales = await respuesta.json(); 
+    
+    const contenedor = document.getElementById('contenedor-locales');
+    if (!contenedor) return;
+    contenedor.innerHTML = '';
 
-    // 2. Convertimos la respuesta en datos que JS entiende
-    const puntos = await respuesta.json();
-
-    // 3. Mostramos los datos en consola para entender qué llegó
-    console.log("Datos recibidos del backend del mapa:");
-    console.table(puntos);
-
-    // 4. Acá más adelante se crearán los marcadores del mapa
-    puntos.forEach(punto => {
-      console.log(
-        `📍 ${punto.nombre} (${punto.tipo}) en [${punto.lat}, ${punto.lng}]`
-      );
+    datosLocales.forEach(local => {
+      // Definimos la tarjeta con los datos del JSON
+      const tarjetaHTML = `
+        <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
+          <div class="relative h-56 overflow-hidden">
+            <img src="${local.foto_url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
+            <span class="absolute top-4 right-4 bg-white/90 text-tierra text-xs font-bold px-3 py-1 rounded-full">
+              ${local.categoria}
+            </span>
+          </div>
+          <div class="p-6">
+            <h4 class="font-serif text-xl text-carbon mb-2">${local.nombre}</h4>
+            <p class="text-gray-500 text-sm mb-4">${local.descripcion_corta}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-monte font-bold">${local.precio_simbolo}</span>
+              <button class="text-tierra hover:scale-110 transition-transform"> 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      contenedor.innerHTML += tarjetaHTML;
     });
 
+    // Dibujamos los pines en el mapa pequeño
+    dibujarPines(mapPreview);
+
   } catch (error) {
-    console.error("Error al cargar datos del mapa:", error);
+    console.error("Error cargando locales:", error);
   }
 }
 
+// 5. Función del Modal
+window.toggleMapModal = function() {
+    const modal = document.getElementById('mapModal');
+    const isOpening = modal.classList.contains('hidden');
+    
+    modal.classList.toggle('hidden');
+    document.body.classList.toggle('overflow-hidden');
+
+    if (isOpening) {
+        initFullMap();
+    }
+};
 
 // ===============================
 // SECCIÓN 4: INICIO GENERAL
 // ===============================
 
-// Cuando toda la página termina de cargar, arrancamos todo
 document.addEventListener('DOMContentLoaded', () => {
+  initPreviewMap();
   obtenerLocales();
   cargarEventosProximos();
-  cargarDatosMapa(); // ← simulación del backend del mapa
 });
+
+
+
+

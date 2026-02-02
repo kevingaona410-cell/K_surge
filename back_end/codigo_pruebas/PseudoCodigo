@@ -1,0 +1,31 @@
+Cosas para el BACKEND con APIs
+
+Por parte de las APIs:
+    -Investigar cuales son las mejores APIs para obtener informacion de lugares.
+        -Considerar limitaciones, costos, facilidad de uso.
+    -Definir que categorias de lugares son relevantes para el proyecto:
+        -Ejemplos: restaurantes, tiendas, parques, hospitales, etc.
+
+    -Determinar los tipos de datos que necesitamos obtener de las APIs:
+        -Ejemplos: nombre, ubicacion, horario, calificaciones, etc.
+
+    -Planificar la frecuencia de las solicitudes a las APIs:
+        -Evitar exceder limites de uso.
+        -Implementar manejo de errores para solicitudes a las APIs.
+        -Diseñar un esquema para almacenar los datos obtenidos de las APIs.(Las categorias que necesitamos)
+
+
+Por parte de la Base de Datos:
+        -Elegir el tipo de base de datos a utilizar (SQL, NoSQL, etc.).
+        -Diseñar la estructura de la base de datos.
+        -Definir tablas, campos, relaciones, indices.
+        -Optimizar la base de datos para consultas eficientes(Comparacion para resultados similares al inputeado).
+        -Implementar la base de datos y probar su funcionamiento.
+
+
+Resumen de Tareas:
+        -Investigar y seleccionar las APIs adecuadas para obtener informacion de lugares.
+        -Definir categorias de lugares relevantes.
+        -Diseñar y crear la estructura de la base de datos para almacenar los datos obtenidos.
+        -Probar el sistema completo para asegurar su correcto funcionamiento.
+        -Documentar todo el proceso para futuras referencias y mantenimiento.
