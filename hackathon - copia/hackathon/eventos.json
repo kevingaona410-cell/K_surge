@@ -1,0 +1,29 @@
+[
+  {
+    "id": 101,
+    "titulo": "Concierto Jazz",
+    "fecha": "25/03/26",
+    "hora": "20:30",
+    "lugar": "Manzana de la Rivera",
+    "imagen": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?q=80&w=600",
+    "es_destacado": true
+  },
+  {
+    "id": 102,
+    "titulo": "Teatro: La Babosa",
+    "fecha": "28/03/26",
+    "hora": "19:00",
+    "lugar": "Teatro Municipal",
+    "imagen": "https://images.unsplash.com/photo-1507676184212-d03ab07a01bf?q=80&w=600",
+    "es_destacado": true
+  },
+  {
+    "id": 103,
+    "titulo": "Festival Gastronómico",
+    "fecha": "02/04/26",
+    "hora": "11:00",
+    "lugar": "Costanera de Asunción",
+    "imagen": "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=600",
+    "es_destacado": true
+  }
+]
