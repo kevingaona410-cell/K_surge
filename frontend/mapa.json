@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "nombre": "Rudi's Deli",
+    "tipo": "gastronomia",
+    "lat": -25.2653,
+    "lng": -57.5801
+  },
+  {
+    "id": 2,
+    "nombre": "Teatro Municipal",
+    "tipo": "evento",
+    "lat": -25.2625,
+    "lng": -57.5756
+  },
+  {
+    "id": 3,
+    "nombre": "Museo del Barro",
+    "tipo": "cultura",
+    "lat": -25.2896,
+    "lng": -57.6052
+  }
+]
