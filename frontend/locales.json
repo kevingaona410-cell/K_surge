@@ -1,0 +1,38 @@
+  [
+    {
+      "id": 1,
+      "nombre": "Factoria Hotel",
+      "descripcion_corta": "Arquitectura industrial con esencia paraguaya en el corazón de Villa Morra.",
+      "foto_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=600",
+      "categoria": "Hotel Boutique",
+      "precio_simbolo": "$$$",
+      "lat": -25.2818, 
+      "lng": -57.6352
+    },
+    {
+      "id": 2,
+      "nombre": "Tierra Colorada",
+      "descripcion_corta": "Cocina de autor que eleva los ingredientes tradicionales a otro nivel.",
+      "foto_url": "https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=600",
+      "categoria": "Gastronomía",
+      "precio_simbolo": "$$$$",
+      "lat": -25.2825,
+      "lng": -57.5639
+    },
+    {
+      "id": 3,
+      "nombre": "Mary's Coffee House",
+      "descripcion_corta": "El lugar ideal para un brunch relajado o trabajar con el mejor café nacional.",
+      "foto_url": "https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=600",
+      "categoria": "Café Culto",
+      "precio_simbolo": "$$"
+    },
+    {
+      "id": 4,
+      "nombre": "La Gallette",
+      "descripcion_corta": "​Auténtica cocina francesa, en el corazón de Asunción. ",
+      "foto_url": "la_galette.jpg",
+      "categoria": "Cafeteria",
+      "precio_simbolo": "$$"
+    }
+  ]
