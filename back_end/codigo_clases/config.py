@@ -1,7 +1,7 @@
 # CONFIGURACIÓN GENERAL
 
 #Llave de la API
-API_KEY = "AIzaSyDiatTzAw9t3xGZzXsVPT-1FETZiKKNirk"
+API_KEY = ""
 
 #Punto geografico de referencia
 LAT = -25.2637
