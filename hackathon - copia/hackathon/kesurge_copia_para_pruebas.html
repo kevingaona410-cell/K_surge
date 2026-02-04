@@ -28,32 +28,27 @@
     }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;family=Playfair+Display:wght@700&amp;display=swap" rel="stylesheet">
 
-  <link
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 
-<script
-  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-  defer
-></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" defer=""></script>
 
 </head>
-<body>
 
     <!-- Header -->
 
-    <nav class="bg-arena/80 backdrop-blur-md sticky top-0 z-50 px-8 py-4 flex justify-between items-center border-b border-tierra/10">
+<nav class="bg-arena/80 backdrop-blur-md sticky top-0 z-50 px-8 py-4 flex justify-between items-center border-b border-tierra/10">
   <div class="flex items-center space-x-2">
     <div class="w-8 h-8 bg-tierra rounded-full"></div> <span class="font-serif text-xl font-bold text-tierra tracking-tight">Kesurge?!</span>
   </div>
 
   <div class="hidden md:flex space-x-10 text-carbon font-medium">
     <a href="#" class="hover:text-tierra transition-colors">Explorar</a>
-    <a href="#" class="hover:text-tierra transition-colors">Mapa</a>
-    <a href="#" class="hover:text-tierra transition-colors">Agenda</a>
+    <button onclick="toggleMapModal()" class="hover:text-tierra transition-colors uppercase text-[11px] tracking-widest">
+    Mapa
+  </button>
+    <a href="Agenda.html" class="hover:text-tierra transition-colors">Agenda</a>
   </div>
 
   <div class="flex items-center space-x-6">
@@ -71,9 +66,7 @@
     <!-- Imagen de fondo -->
 <section class="relative h-[160vh] flex items-stretch overflow-hidden">
   <div class="absolute top-0 left-0 w-full h-[160vh] z-0">
-    <img src="palacio_lopez.jpg" 
-         alt="Panteón de los Héroes en Asunción"
-         class="w-full h-full object-cover">
+    <img src="palacio_lopez.jpg" alt="Panteón de los Héroes en Asunción" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-black/50"></div> </div>
 
     <!-- Cuadro de actividades del dia -->
@@ -118,8 +111,8 @@
           <span class="font-sans text-lg">Compras</span>
         </a>
         <a href="/hospedajes" class="flex items-center space-x-3 text-carbon hover:text-tierra hover:bg-white/50 px-4 py-3 rounded-xl transition-all group">
-          <svg class="w-6 h-6 text-tierra group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
+          <svg class="w-6 h-6 text-tierra group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z"></path>
           </svg>
           <span class="font-sans text-lg">Hospedajes</span>
         </a>
@@ -132,29 +125,34 @@
   <h2 class="font-serif text-3xl text-tierra mb-4 text-center">KenMap de Asunción</h2>
   
   <div class="w-full h-full rounded-xl overflow-hidden shadow-inner border border-gray-200">
-    <div id="map-preview" class="w-full h-full"></div>
+    <div id="map-preview" class="w-full h-full leaflet-container leaflet-touch leaflet-retina leaflet-fade-anim leaflet-grab leaflet-touch-drag leaflet-touch-zoom" tabindex="0" style="position: relative;"><div class="leaflet-pane leaflet-map-pane" style="transform: translate3d(-821.16px, 205.103px, 0px);"><div class="leaflet-pane leaflet-tile-pane"><div class="leaflet-layer " style="z-index: 1; opacity: 1;"><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 17; transform: translate3d(692px, -83px, 0px) scale(0.5);"></div><div class="leaflet-tile-container leaflet-zoom-animated" style="z-index: 18; transform: translate3d(692px, -83px, 0px) scale(1);"><img alt="" src="https://a.tile.openstreetmap.org/12/1393/2345.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(520px, -69px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/12/1392/2345.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(264px, -69px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/12/1394/2345.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(776px, -69px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/12/1392/2344.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(264px, -325px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/12/1393/2344.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(520px, -325px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/12/1392/2346.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(264px, 187px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/12/1393/2346.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(520px, 187px, 0px); opacity: 1;"><img alt="" src="https://b.tile.openstreetmap.org/12/1391/2345.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(8px, -69px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/12/1391/2344.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(8px, -325px, 0px); opacity: 1;"><img alt="" src="https://a.tile.openstreetmap.org/12/1394/2344.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(776px, -325px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/12/1391/2346.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(8px, 187px, 0px); opacity: 1;"><img alt="" src="https://c.tile.openstreetmap.org/12/1394/2346.png" class="leaflet-tile leaflet-tile-loaded" style="width: 256px; height: 256px; transform: translate3d(776px, 187px, 0px); opacity: 1;"></div></div></div><div class="leaflet-pane leaflet-overlay-pane"></div><div class="leaflet-pane leaflet-shadow-pane"><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(1017px, -32px, 0px);"><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" alt="" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; transform: translate3d(1225px, -30px, 0px);"></div><div class="leaflet-pane leaflet-marker-pane"><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="Marker" tabindex="0" role="button" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1017px, -32px, 0px); z-index: -32;"><img src="https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-interactive" alt="Marker" tabindex="0" role="button" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; transform: translate3d(1225px, -30px, 0px); z-index: -30;"></div><div class="leaflet-pane leaflet-tooltip-pane"></div><div class="leaflet-pane leaflet-popup-pane"></div><div class="leaflet-proxy leaflet-zoom-animated" style="transform: translate3d(356655px, 600465px, 0px) scale(2048);"></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in" role="button" aria-label="Zoom in" aria-disabled="false"><span aria-hidden="true">+</span></a><a class="leaflet-control-zoom-out" href="#" title="Zoom out" role="button" aria-label="Zoom out" aria-disabled="false"><span aria-hidden="true">−</span></a></div></div><div class="leaflet-top leaflet-right"></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="leaflet-control-attribution leaflet-control"><a href="https://leafletjs.com" title="A JavaScript library for interactive maps"><svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8" class="leaflet-attribution-flag"><path fill="#4C7BE1" d="M0 0h12v4H0z"></path><path fill="#FFD500" d="M0 4h12v3H0z"></path><path fill="#E0BC00" d="M0 7h12v1H0z"></path></svg> Leaflet</a> <span aria-hidden="true">|</span> © OpenStreetMap</div></div></div></div>
   </div>
 
   <button onclick="toggleMapModal()" class="absolute top-4 right-4 bg-tierra hover:bg-monte text-white p-2 rounded-full shadow-lg z-[40] transition-transform hover:scale-110">
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15" />
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15"></path>
     </svg>
   </button>
 </div>
+<div id="mapModal" class="fixed inset-0 z-[200] hidden bg-carbon/95 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="relative bg-arena w-full max-w-5xl h-[80vh] rounded-[3rem] overflow-hidden shadow-2xl border border-tierra/20">
+        
+        <div id="category-controls" class="absolute top-6 left-1/2 -translate-x-1/2 z-[210] bg-white/90 backdrop-blur-md rounded-full px-6 py-2 shadow-xl flex gap-4 border border-tierra/10">
+            <button class="cat-btn active text-2xl hover:scale-125 transition-transform" data-cat="comida" title="Comida">🍴</button>
+            <button class="cat-btn active text-2xl hover:scale-125 transition-transform" data-cat="cultura" title="Cultura">🎨</button>
+            <button class="cat-btn active text-2xl hover:scale-125 transition-transform" data-cat="turismo" title="Hospedaje">🏨</button>
+            <button class="cat-btn active text-2xl hover:scale-125 transition-transform" data-cat="recreacion" title="Servicios">🛠️</button>
+        </div>
 
-<div id="mapModal" class="fixed inset-0 z-[100] hidden bg-black/90 p-4 md:p-10 flex flex-col">
-  <button onclick="toggleMapModal()" class="absolute bottom-8 right-8 text-white bg-tierra hover:bg-red-600 z-[110] p-4 rounded-full shadow-2xl transition-all">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="3" stroke="currentColor" class="w-8 h-8">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
+        <button onclick="toggleMapModal()" class="absolute top-6 right-6 z-[210] bg-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:bg-tierra hover:text-white transition-all">
+            ✕
+        </button>
 
-  <div class="w-full h-full bg-white rounded-2xl overflow-hidden shadow-2xl">
-    <div id="map-full" class="w-full h-full"></div>
-  </div>
+        <div id="map-full" class="w-full h-full z-[205]"></div>
+    </div>
 </div>
     
-</section>
+</div></section>
 
 <script>
   function toggleMapModal() {
@@ -182,8 +180,7 @@
 <!-- Empieza el scroll -->
 <section class="relative h-[40vh] flex items-center justify-center overflow-hidden">
   <div class="absolute inset-0">
-    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=1200" 
-         class="w-full h-full object-cover" alt="Restaurantes en Asunción">
+    <img src="https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&amp;w=1200" class="w-full h-full object-cover" alt="Restaurantes en Asunción">
     <div class="absolute inset-0 bg-gradient-to-b from-black/60 to-tierra/40"></div>
   </div>
   <div class="relative z-10 text-center">
@@ -210,12 +207,8 @@
     </div>
     <!-- tarjeta_local -->
       <div id="contenedor-locales" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="col-span-full text-center py-20 text-tierra/50 italic">
-            Cargando las mejores experiencias...
-          </div>
-        </div>
       </div>
-    </div>
+    
 </section>
 <!-- seccion eventos próximos destacados -->
 <section class="bg-arena py-16 px-6">
@@ -231,17 +224,15 @@
     </div>
     
     <!-- tarjeta_evento 1 -->
-    <div  id="contenedor-eventos-proximos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      </div>
-  </div>
+    <div id="contenedor-eventos-proximos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    </div>
 </section>
 
 <!-- seccion 3 -->
 
 <section class="relative h-[60vh] flex items-center justify-center">
   <div class="absolute inset-0 z-0">
-    <img src="arpa.jpg" 
-         class="w-full h-full object-cover" alt="Vida Nocturna">
+    <img src="arpa.jpg" class="w-full h-full object-cover" alt="Vida Nocturna">
     <div class="absolute inset-0 bg-monte/40 mix-blend-multiply"></div>
     <div class="absolute inset-0 bg-black/40"></div>
   </div>
@@ -321,5 +312,43 @@
 </footer>
 
 
-</body>
-</html>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body></html>

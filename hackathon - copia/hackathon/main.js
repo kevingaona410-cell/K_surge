@@ -1,65 +1,5 @@
 // ===============================
-// SECCIÓN 1: LOCALES DESTACADOS
-// ===============================
-
-async function obtenerLocales() {
-  try {
-    const respuesta = await fetch('locales.json');
-    datosLocales = await respuesta.json(); 
-    
-    const contenedor = document.getElementById('contenedor-locales');
-    if (!contenedor) return;
-    
-    contenedor.innerHTML = ''; // Limpiamos el mensaje de cargando
-
-    datosLocales.forEach(local => {
-      // AQUÍ DEFINIMOS LA VARIABLE (Asegúrate de que empiece con 'const')
-      const tarjetaHTML = `
-        <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all">
-          <div class="relative h-56 overflow-hidden">
-            <img src="${local.foto_url}" class="w-full h-full object-cover group-hover:scale-110 transition-transform">
-            <span class="absolute top-4 right-4 bg-white/90 text-tierra text-xs font-bold px-3 py-1 rounded-full">
-              ${local.categoria}
-            </span>
-          </div>
-          <div class="p-6">
-            <h4 class="font-serif text-xl text-carbon mb-2">${local.nombre}</h4>
-            <p class="text-gray-500 text-sm mb-4">${local.descripcion_corta}</p>
-            <div class="flex items-center justify-between">
-              <span class="text-monte font-bold">${local.precio_simbolo}</span>
-              <button class="text-tierra hover:scale-110 transition-transform"> 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
-
-      // Ahora que está definida, la agregamos al HTML
-      contenedor.innerHTML += tarjetaHTML;
-    });
-
-    // Dibujamos los pines después de las tarjetas
-    if (typeof dibujarPines === "function") {
-        dibujarPines(mapPreview);
-    }
-
-  } catch (error) {
-    console.error("Error cargando locales:", error);
-    const contenedor = document.getElementById('contenedor-locales');
-    if (contenedor) {
-      contenedor.innerHTML = `<p class="col-span-full text-center py-10 text-red-500 font-bold">Error: Verifica que tu locales.json no tenga errores de sintaxis.</p>`;
-    }
-  }
-}
-
-
-
-
-// ===============================
-// SECCIÓN 2: EVENTOS PRÓXIMOS
+// SECCIÓN 1: EVENTOS PRÓXIMOS
 // ===============================
 
 // Esta función carga los eventos destacados
@@ -110,13 +50,14 @@ async function cargarEventosProximos() {
 }
 
 //======================
-// SECCION 3: KENMAP
+// SECCION 2: KENMAP -- LOCALES DE COMIDA
 //=======================
 
 // Variables globales
 let mapPreview;
 let mapFull;
 let datosLocales = []; 
+
 
 // 1. Inicializar el mapa pequeño (Carga siempre)
 function initPreviewMap() {
@@ -155,7 +96,7 @@ function dibujarPines(mapaDestino) {
 // 4. Función de locales UNIFICADA (Aquí estaba el error)
 async function obtenerLocales() {
   try {
-    const respuesta = await fetch('locales.json');
+    const respuesta = await fetch('lugares_frontend.json');
     datosLocales = await respuesta.json(); 
     
     const contenedor = document.getElementById('contenedor-locales');
@@ -174,9 +115,9 @@ async function obtenerLocales() {
           </div>
           <div class="p-6">
             <h4 class="font-serif text-xl text-carbon mb-2">${local.nombre}</h4>
-            <p class="text-gray-500 text-sm mb-4">${local.descripcion_corta}</p>
+            <p class="text-gray-500 text-sm mb-4">${local.telefono}</p>
             <div class="flex items-center justify-between">
-              <span class="text-monte font-bold">${local.precio_simbolo}</span>
+              <span class="text-monte font-bold">${local.rating}</span>
               <button class="text-tierra hover:scale-110 transition-transform"> 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
@@ -210,14 +151,101 @@ window.toggleMapModal = function() {
     }
 };
 
+
+// ===============================
+// SECCIÓN 3: AGENDA EDITORIAL
+// ===============================
+
+async function cargarAgendaCompleta() {
+  try {
+    const respuesta = await fetch('agenda.json'); 
+    const eventos = await respuesta.json();
+
+    const contenedor = document.getElementById('contenedor-eventos');
+    if (!contenedor) return; // Seguridad por si el ID no existe en el HTML
+    
+    contenedor.innerHTML = '';
+
+    // CORRECCIÓN: Usamos 'eventos' y añadimos 'index' para el ID y el número
+    eventos.forEach((ev, index) => {
+      
+      // CORRECCIÓN: Definimos el número de orden (01, 02, 03...)
+      const numero = (index + 1).toString().padStart(2, '0');
+    
+      const tarjetaHTML = `
+        <div class="event-row group relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center opacity-0 translate-y-10 transition-all duration-700" id="event-row-${index}">
+          
+          <div class="lg:col-span-5 relative">
+            <div class="aspect-[4/5] overflow-hidden rounded-[4rem] relative z-10 shadow-2xl">
+              <img src="${ev.imagen}" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700">
+            </div>
+            <span class="absolute -bottom-10 -left-10 text-[10rem] md:text-[12rem] font-serif font-black text-tierra/10 leading-none select-none z-0">${numero}</span>
+          </div>
+
+          <div class="lg:col-span-7 lg:pl-12">
+            <div class="flex items-center gap-4 mb-6">
+              <span class="h-px w-12 bg-tierra"></span>
+              <span class="text-tierra font-black uppercase tracking-[0.3em] text-[10px]">${ev.categoria}</span>
+            </div>
+            
+            <h3 class="font-serif text-5xl md:text-7xl text-carbon mb-8 leading-none tracking-tighter group-hover:translate-x-4 transition-transform duration-500">
+              ${ev.titulo}
+            </h3>
+
+            <div class="flex items-end justify-between border-b border-carbon/10 pb-8">
+              <div class="space-y-2">
+                <p class="text-carbon font-bold text-xl italic">${ev.lugar}</p>
+                <p class="text-gray-500 font-medium">${ev.fecha} — ${ev.hora}hs</p>
+              </div>
+              
+              <button class="w-16 h-16 rounded-full bg-carbon text-white flex items-center justify-center group-hover:bg-tierra group-hover:rotate-45 transition-all duration-500">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-width="2" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      contenedor.innerHTML += tarjetaHTML;
+
+      // CORRECCIÓN: Activamos la animación de entrada (quitando opacity-0)
+      setTimeout(() => {
+        const row = document.getElementById(`event-row-${index}`);
+        if (row) row.classList.remove('opacity-0', 'translate-y-10');
+      }, index * 150); // Aparecen una tras otra
+    });
+
+  } catch (error) {
+    console.error("Error cargando la agenda:", error);
+  }
+}
+
+
+
 // ===============================
 // SECCIÓN 4: INICIO GENERAL
 // ===============================
 
 document.addEventListener('DOMContentLoaded', () => {
-  initPreviewMap();
-  obtenerLocales();
-  cargarEventosProximos();
+  // Solo ejecutamos si el contenedor específico existe en la página actual
+  const contenedorAgenda = document.getElementById('contenedor-eventos');
+  const contenedorProximos = document.getElementById('contenedor-eventos-proximos');
+  const mapaPreview = document.getElementById('map-preview');
+
+  if (contenedorAgenda) {
+    cargarAgendaCompleta();
+  }
+  
+  if (contenedorProximos) {
+    cargarEventosProximos();
+  }
+
+  if (mapaPreview) {
+    initPreviewMap();
+    obtenerLocales();
+  }
 });
 
 
